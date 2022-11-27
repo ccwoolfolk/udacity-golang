@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -29,6 +30,20 @@ func TestGetCustomersHandler(t *testing.T) {
 	if ctype := rr.Header().Get("Content-Type"); ctype != "application/json" {
 		t.Errorf("Content-Type does not match: got %v want %v",
 			ctype, "application/json")
+	}
+
+	// Seed data is array of length 3
+	var customers []map[string]interface{}
+	err = json.NewDecoder(rr.Body).Decode(&customers)
+	if err != nil {
+		t.Errorf("Not an array of customers: %v", rr.Body.String())
+	} else if len(customers) != 3 {
+		t.Errorf("Seed data not of length 3")
+	}
+
+	// Serializes to camel-cased
+	if _, ok := customers[0]["id"]; !ok {
+		t.Errorf("No 'id' key")
 	}
 }
 

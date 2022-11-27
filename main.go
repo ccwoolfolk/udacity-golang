@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -8,12 +9,12 @@ import (
 )
 
 type Customer struct {
-	ID        int
-	Name      string
-	Role      string
-	Email     string
-	Phone     string
-	Contacted bool
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Role      string `json:"role"`
+	Email     string `json:"email"`
+	Phone     string `json:"phone"`
+	Contacted bool   `json:"contacted"`
 }
 
 var customers = []Customer{
@@ -48,7 +49,9 @@ func getCustomer(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCustomers(w http.ResponseWriter, r *http.Request) {
-
+	json.NewEncoder(w).Encode(customers)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 }
 
 func addCustomer(w http.ResponseWriter, r *http.Request) {
