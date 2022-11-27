@@ -7,6 +7,42 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type Customer struct {
+	ID        int
+	Name      string
+	Role      string
+	Email     string
+	Phone     string
+	Contacted bool
+}
+
+var customers = []Customer{
+	{
+		ID:        1,
+		Name:      "Alfred",
+		Role:      "Butler",
+		Email:     "alfie@hotmail.com",
+		Phone:     "555-555-5555",
+		Contacted: false,
+	},
+	{
+		ID:        2,
+		Name:      "Ronald",
+		Role:      "President",
+		Email:     "ronald@hotmail.com",
+		Phone:     "011-41-555-555-5555",
+		Contacted: true,
+	},
+	{
+		ID:        3,
+		Name:      "Mat",
+		Role:      "Gambler",
+		Email:     "mat@hotmail.com",
+		Phone:     "",
+		Contacted: false,
+	},
+}
+
 func getCustomer(w http.ResponseWriter, r *http.Request) {
 
 }
