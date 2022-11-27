@@ -15,7 +15,7 @@ type Customer struct {
 	Name      string `json:"name"`
 	Role      string `json:"role"`
 	Email     string `json:"email"`
-	Phone     string `json:"phone"`
+	Phone     int    `json:"phone"`
 	Contacted bool   `json:"contacted"`
 }
 
@@ -25,7 +25,7 @@ var customers = []Customer{
 		Name:      "Alfred",
 		Role:      "Butler",
 		Email:     "alfie@hotmail.com",
-		Phone:     "555-555-5555",
+		Phone:     5555555555,
 		Contacted: false,
 	},
 	{
@@ -33,7 +33,7 @@ var customers = []Customer{
 		Name:      "Ronald",
 		Role:      "President",
 		Email:     "ronald@hotmail.com",
-		Phone:     "011-41-555-555-5555",
+		Phone:     5555555556,
 		Contacted: true,
 	},
 	{
@@ -41,7 +41,7 @@ var customers = []Customer{
 		Name:      "Mat",
 		Role:      "Gambler",
 		Email:     "mat@hotmail.com",
-		Phone:     "",
+		Phone:     5555555557,
 		Contacted: false,
 	},
 }
