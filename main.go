@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -44,8 +46,31 @@ var customers = []Customer{
 	},
 }
 
-func getCustomer(w http.ResponseWriter, r *http.Request) {
+func getCustomerById(id int) (Customer, error) {
+	for _, c := range customers {
+		if c.ID == id {
+			return c, nil
+		}
+	}
 
+	return Customer{}, errors.New("No customer found")
+}
+
+func getCustomer(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	idRaw := mux.Vars(r)["id"]
+	id, parsingErr := strconv.Atoi(idRaw)
+
+	customer, notFoundErr := getCustomerById(id)
+
+	if parsingErr != nil || notFoundErr != nil {
+		w.WriteHeader(http.StatusNotFound)
+	} else {
+		json.NewEncoder(w).Encode(customer)
+		w.WriteHeader(http.StatusOK)
+
+	}
 }
 
 func getCustomers(w http.ResponseWriter, r *http.Request) {
